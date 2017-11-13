@@ -1,0 +1,18 @@
+URL=http://localhost:8080/emp_rest_svcs/v1/employee/all
+
+
+http://websystique.com/springmvc/spring-4-mvc-rest-service-example-using-restcontroller/
+https://viralpatel.net/blogs/embed-tomcat-maven-project-run-tomcat-maven/
+http://viralpatel.net/blogs/spring-4-mvc-rest-example-json/
+https://howtodoinjava.com/spring/spring-mvc/spring-mvc-hello-world-example/
+https://howtodoinjava.com/spring/spring-restful/spring-rest-hello-world-xml-example/
+https://www.tutorialspoint.com/spring/spring_jdbc_example.htm
+
+https://www.journaldev.com/3531/spring-mvc-hibernate-mysql-integration-crud-example-tutorial
+
+CREATE TABLE `employee_db`.`employee` (
+  `sapid` INT NOT NULL AUTO_INCREMENT,
+  `fullname` VARCHAR(95) NOT NULL,
+  `email` VARCHAR(95) NOT NULL,
+  `city` VARCHAR(95) NULL,
+  PRIMARY KEY (`sapid`));

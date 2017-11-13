@@ -1,5 +1,7 @@
 URL=http://localhost:8080/emp_rest_svcs/v1/employee/all
 
+to run :
+mvn clean install tomcat7:run
 
 http://websystique.com/springmvc/spring-4-mvc-rest-service-example-using-restcontroller/
 https://viralpatel.net/blogs/embed-tomcat-maven-project-run-tomcat-maven/

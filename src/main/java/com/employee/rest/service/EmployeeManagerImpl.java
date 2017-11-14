@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 
 import com.employee.rest.data.dao.EmployeeDAO;
 import com.employee.rest.data.model.Employee;
+import com.employee.rest.exception.EmployeeNotFoundException;
 
 /**
  * EmployeeManager - Extending from the EmployeeDAOImpl
@@ -23,6 +24,25 @@ public class EmployeeManagerImpl implements EmployeeManager {
 
 	public List<Employee> listAll() {
 		return employeeDao.getAllEmployees();
+	}
+
+	public Employee getEmployeeDetails(int sapid) throws EmployeeNotFoundException {
+		return employeeDao.getEmployee(sapid);
+	}
+
+	public Employee addEmployee(Employee employee) {
+		// TODO Auto-generated method stub
+		return employeeDao.insertEmployee(employee);
+	}
+
+	public Employee modifyEmployeeDetails(Employee employee) throws EmployeeNotFoundException {
+		// TODO Auto-generated method stub
+		return employeeDao.modifyEmployeeDetails(employee);
+	}
+
+	public boolean removeEmployeeDetails(Employee employee) throws EmployeeNotFoundException {
+		// TODO Auto-generated method stub
+		return employeeDao.removeEmployee(employee);
 	}
 
 }

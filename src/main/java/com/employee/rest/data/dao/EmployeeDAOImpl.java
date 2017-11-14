@@ -9,6 +9,7 @@ import java.util.List;
 import org.springframework.stereotype.Repository;
 
 import com.employee.rest.data.model.Employee;
+import com.employee.rest.exception.EmployeeNotFoundException;
 
 /**
  * EmployeeDAOImpl - Implementing the EmployeeDAO Interface
@@ -16,7 +17,6 @@ import com.employee.rest.data.model.Employee;
 @Repository
 public class EmployeeDAOImpl implements EmployeeDAO {
 
-	
 	public List<Employee> getAllEmployees() {
 		List<Employee> employees = new ArrayList<Employee>();
 
@@ -38,29 +38,30 @@ public class EmployeeDAOImpl implements EmployeeDAO {
 		return employees;
 	}
 
-	public Employee addEmployee(Employee employee) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
 	public Employee modifyEmployeeDetails(Employee employee) {
-		// TODO Auto-generated method stub
 		return null;
 	}
 
-	public List<Employee> getEmployee(int sapid) {
-		// TODO Auto-generated method stub
-		return null;
+	public Employee getEmployee(int sapid) throws EmployeeNotFoundException {
+		// TODO: make changes to the return by removing the throw
+		throw new EmployeeNotFoundException(1);
 	}
 
 	public boolean isEmployeeExists(Employee employee) {
-		// TODO Auto-generated method stub
 		return false;
 	}
 
 	public boolean removeEmployee(Employee employee) {
-		// TODO Auto-generated method stub
 		return false;
+	}
+
+	public Employee insertEmployee(Employee employee) {
+		return null;
+	}
+
+	public Employee modifyEmployeeRecord(Employee employee) throws EmployeeNotFoundException {
+		// TODO: make changes to the return by removing the throw
+		throw new EmployeeNotFoundException(1);
 	}
 
 }

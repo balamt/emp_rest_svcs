@@ -10,6 +10,8 @@ https://howtodoinjava.com/spring/spring-mvc/spring-mvc-hello-world-example/
 https://howtodoinjava.com/spring/spring-restful/spring-rest-hello-world-xml-example/
 https://www.tutorialspoint.com/spring/spring_jdbc_example.htm
 
+https://lankydanblog.com/2017/09/12/global-exception-handling-with-controlleradvice/
+
 https://www.journaldev.com/3531/spring-mvc-hibernate-mysql-integration-crud-example-tutorial
 
 CREATE TABLE `employee_db`.`employee` (

@@ -6,6 +6,7 @@ package com.employee.rest.data.dao;
 import java.util.List;
 
 import com.employee.rest.data.model.Employee;
+import com.employee.rest.exception.EmployeeNotFoundException;
 
 /**
  * Employee Interface
@@ -14,7 +15,7 @@ import com.employee.rest.data.model.Employee;
 public interface EmployeeDAO {
 
 	// INSERT - CREATE
-	Employee addEmployee(Employee employee);
+	Employee insertEmployee(Employee employee);
 
 	// UPDATE
 	Employee modifyEmployeeDetails(Employee employee);
@@ -22,11 +23,15 @@ public interface EmployeeDAO {
 	// SELECT - RETRIEVE
 	List<Employee> getAllEmployees();
 
-	List<Employee> getEmployee(int sapid);
+	Employee getEmployee(int sapid) throws EmployeeNotFoundException;
 
 	boolean isEmployeeExists(Employee employee);
 
 	// DELETE
 	boolean removeEmployee(Employee employee);
+
+	Employee modifyEmployeeRecord(Employee employee) throws EmployeeNotFoundException;
+
+	
 
 }

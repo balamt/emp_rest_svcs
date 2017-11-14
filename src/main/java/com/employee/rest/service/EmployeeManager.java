@@ -18,10 +18,10 @@ public interface EmployeeManager {
 
 	Employee getEmployeeDetails(int sapid) throws EmployeeNotFoundException;
 
-	Employee addEmployee(Employee employee);
+	boolean addEmployee(Employee employee);
 
 	Employee modifyEmployeeDetails(Employee employee) throws EmployeeNotFoundException;
 
-	boolean removeEmployeeDetails(Employee employee) throws EmployeeNotFoundException;
+	boolean removeEmployeeDetails(int sapid) throws EmployeeNotFoundException;
 
 }

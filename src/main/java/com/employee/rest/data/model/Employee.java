@@ -17,18 +17,23 @@ import javax.persistence.Table;
  *
  */
 @Entity
-@Table(name = "EMPLOYEE")
+@Table(name = "employee")
 public class Employee implements Serializable {
 
 	private static final long serialVersionUID = 571491446097074528L;
 
 	@Id
 	@Column(name = "sapid")
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Integer sapId;
-	
+
+	@Column(name = "fullname", nullable = true)
 	private String fullName;
+
+	@Column(name = "email", nullable = true)
 	private String email;
+
+	@Column(name = "city", nullable = true)
 	private String city;
 
 	public String getCity() {
@@ -75,6 +80,21 @@ public class Employee implements Serializable {
 		toStringBuilder.append("]");
 		return toStringBuilder.toString();
 
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (sapId == null || obj == null || getClass() != obj.getClass())
+			return false;
+		Employee that = (Employee) obj;
+		return sapId.equals(that.sapId);
+	}
+
+	@Override
+	public int hashCode() {
+		return sapId == null ? 0 : sapId.hashCode();
 	}
 
 }

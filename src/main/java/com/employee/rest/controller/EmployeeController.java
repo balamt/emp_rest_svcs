@@ -6,8 +6,8 @@ package com.employee.rest.controller;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
@@ -55,7 +55,7 @@ public class EmployeeController {
 	 * @return String - Adding New Employee to the DB
 	 */
 	@RequestMapping(value = "/add", method = RequestMethod.POST)
-	public Employee addEmployee(Employee employee) {
+	public boolean addEmployee(@RequestBody Employee employee) {
 		return empManager.addEmployee(employee);
 	}
 
@@ -66,7 +66,7 @@ public class EmployeeController {
 	 * @throws EmployeeNotFoundException
 	 */
 	@RequestMapping(value = "/update", method = RequestMethod.POST)
-	public Employee modifyEmployeeDetails(Employee employee) throws EmployeeNotFoundException {
+	public Employee modifyEmployeeDetails(@RequestBody Employee employee) throws EmployeeNotFoundException {
 		return empManager.modifyEmployeeDetails(employee);
 	}
 
@@ -76,10 +76,10 @@ public class EmployeeController {
 	 * @return String - Adding New Employee to the DB
 	 * @throws EmployeeNotFoundException
 	 */
-	@RequestMapping(value = "/detele/{sapid}", method = RequestMethod.DELETE)
-	public String removeEmployeeDetails(Employee employee) throws EmployeeNotFoundException {
-		return (empManager.removeEmployeeDetails(employee)) ? HttpStatus.OK.toString()
-				: HttpStatus.NOT_MODIFIED.toString();
+	@RequestMapping(value = "/delete/{sapid}", method = RequestMethod.DELETE)
+	public String removeEmployeeDetails(@PathVariable int sapid) throws EmployeeNotFoundException {
+		empManager.removeEmployeeDetails(sapid);
+		return "Ok";
 	}
 
 }

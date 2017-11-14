@@ -15,7 +15,7 @@ import com.employee.rest.exception.EmployeeNotFoundException;
 public interface EmployeeDAO {
 
 	// INSERT - CREATE
-	Employee insertEmployee(Employee employee);
+	boolean insertEmployee(Employee employee);
 
 	// UPDATE
 	Employee modifyEmployeeDetails(Employee employee);
@@ -28,7 +28,7 @@ public interface EmployeeDAO {
 	boolean isEmployeeExists(Employee employee);
 
 	// DELETE
-	boolean removeEmployee(Employee employee);
+	boolean removeEmployee(int sapId) throws EmployeeNotFoundException;
 
 	Employee modifyEmployeeRecord(Employee employee) throws EmployeeNotFoundException;
 

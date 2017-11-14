@@ -30,7 +30,7 @@ public class EmployeeManagerImpl implements EmployeeManager {
 		return employeeDao.getEmployee(sapid);
 	}
 
-	public Employee addEmployee(Employee employee) {
+	public boolean addEmployee(Employee employee) {
 		// TODO Auto-generated method stub
 		return employeeDao.insertEmployee(employee);
 	}
@@ -40,9 +40,9 @@ public class EmployeeManagerImpl implements EmployeeManager {
 		return employeeDao.modifyEmployeeDetails(employee);
 	}
 
-	public boolean removeEmployeeDetails(Employee employee) throws EmployeeNotFoundException {
+	public boolean removeEmployeeDetails(int sapId) throws EmployeeNotFoundException {
 		// TODO Auto-generated method stub
-		return employeeDao.removeEmployee(employee);
+		return employeeDao.removeEmployee(sapId);
 	}
 
 }

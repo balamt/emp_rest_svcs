@@ -27,13 +27,13 @@ public class Employee implements Serializable {
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Integer sapId;
 
-	@Column(name = "fullname", nullable = true)
+	@Column(name = "fullname")
 	private String fullName;
 
-	@Column(name = "email", nullable = true)
+	@Column(name = "email")
 	private String email;
 
-	@Column(name = "city", nullable = true)
+	@Column(name = "city")
 	private String city;
 
 	public String getCity() {

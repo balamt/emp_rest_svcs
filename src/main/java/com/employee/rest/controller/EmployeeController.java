@@ -4,7 +4,6 @@
 package com.employee.rest.controller;
 
 import java.util.List;
-import java.util.logging.Logger;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -68,10 +67,7 @@ public class EmployeeController {
 	 */
 	@RequestMapping(value = "/update", method = RequestMethod.POST)
 	public Employee modifyEmployeeDetails(@RequestBody Employee employee) throws EmployeeNotFoundException {
-		System.out.println(employee.toString());
-		Employee e1 = empManager.modifyEmployeeDetails(employee);
-		System.err.println(e1.toString());
-		return e1;
+		return empManager.modifyEmployeeDetails(employee);
 	}
 
 	/**

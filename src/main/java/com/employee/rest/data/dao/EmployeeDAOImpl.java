@@ -53,13 +53,22 @@ public class EmployeeDAOImpl implements EmployeeDAO {
 	}
 
 	public Employee modifyEmployeeDetails(Employee employee) {
-		session = sessionFactory.openSession();
-		tx = session.beginTransaction();
-		
-		session.update(employee);
-		
-		tx.commit();
+		try {
+
+			session = sessionFactory.openSession();
+			tx = session.beginTransaction();
+
+			session.update(employee);
+
+			tx.commit();
+
+		} catch (Exception ex) {
+			ex.printStackTrace();
+		}
+
 		session.close();
+
+		System.err.println(employee.toString());
 		return employee;
 	}
 
@@ -67,11 +76,11 @@ public class EmployeeDAOImpl implements EmployeeDAO {
 		session = sessionFactory.openSession();
 		tx = session.beginTransaction();
 		Employee employee = (Employee) session.get(Employee.class, sapid);
-		
-			if (employee == null) {
-				throw new EmployeeNotFoundException(sapid);
-			}
-			
+
+		if (employee == null) {
+			throw new EmployeeNotFoundException(sapid);
+		}
+
 		tx.commit();
 		session.close();
 		return employee;
@@ -101,7 +110,7 @@ public class EmployeeDAOImpl implements EmployeeDAO {
 		LOGGER.log(Level.DEBUG, employee.toString());
 
 		session.save(employee);
-		
+
 		tx.commit();
 		session.close();
 

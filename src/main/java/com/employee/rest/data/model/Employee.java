@@ -24,7 +24,7 @@ public class Employee implements Serializable {
 
 	@Id
 	@Column(name = "sapid")
-	@GeneratedValue(strategy = GenerationType.AUTO)
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer sapId;
 
 	@Column(name = "fullname")
@@ -80,6 +80,21 @@ public class Employee implements Serializable {
 		toStringBuilder.append("]");
 		return toStringBuilder.toString();
 
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (sapId == null || obj == null || getClass() != obj.getClass())
+			return false;
+		Employee that = (Employee) obj;
+		return sapId.equals(that.sapId);
+	}
+
+	@Override
+	public int hashCode() {
+		return sapId == null ? 0 : sapId.hashCode();
 	}
 
 }

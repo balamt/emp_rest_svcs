@@ -66,11 +66,10 @@ public class EmployeeDAOImpl implements EmployeeDAO {
 		tx = session.beginTransaction();
 
 		empDbSource = this.getEmployee(employee.getSapId());
-		isEmployeeExists(empDbSource);
-		
+
 		LOGGER.log(Level.INFO, empDbSource.toString());
 		LOGGER.log(Level.INFO, employee.toString());
-		
+
 		if (empDbSource.getSapId() <= 0) {
 			throw new EmployeeNotFoundException(employee.getSapId());
 		}
@@ -91,6 +90,7 @@ public class EmployeeDAOImpl implements EmployeeDAO {
 			throw new EmployeeDataIntegrityException("Unable to Edit Sap Id");
 		}
 
+		LOGGER.log(Level.INFO, empDbSource.toString());
 		tx.commit();
 
 		return empDbSource;
@@ -102,7 +102,7 @@ public class EmployeeDAOImpl implements EmployeeDAO {
 		tx = session.beginTransaction();
 		Employee employee = (Employee) session.get(Employee.class, sapid);
 
-		if (employee == null) {
+		if (employee == null || employee.getSapId() <= 0) {
 			throw new EmployeeNotFoundException(sapid);
 		}
 
@@ -110,6 +110,7 @@ public class EmployeeDAOImpl implements EmployeeDAO {
 
 	}
 
+	@Transactional
 	public boolean isEmployeeExists(Employee employee) throws EmployeeNotFoundException {
 
 		Employee em = this.getEmployee(employee.getSapId());
@@ -141,12 +142,6 @@ public class EmployeeDAOImpl implements EmployeeDAO {
 		tx.commit();
 
 		return (employee.getSapId() != null);
-	}
-
-	@Transactional
-	public Employee modifyEmployeeRecord(Employee employee) throws EmployeeNotFoundException {
-		// TODO: make changes to the return by removing the throw
-		throw new EmployeeNotFoundException(1);
 	}
 
 }

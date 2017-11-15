@@ -31,8 +31,4 @@ public interface EmployeeDAO {
 	// DELETE
 	boolean removeEmployee(int sapId) throws EmployeeNotFoundException;
 
-	Employee modifyEmployeeRecord(Employee employee) throws EmployeeNotFoundException;
-
-	
-
 }

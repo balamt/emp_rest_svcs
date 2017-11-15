@@ -7,7 +7,7 @@ import org.springframework.web.bind.annotation.ResponseStatus;
  * EmployeeNotFoundException - To manage and handle the Employee Not Found in the Record
  *
  */
-@ResponseStatus(value=HttpStatus.NOT_FOUND, reason="Employee Not Found") 
+@ResponseStatus(value=HttpStatus.NOT_FOUND, reason="Employee Not Available") 
 public class EmployeeNotFoundException extends Exception {
 
 	/**

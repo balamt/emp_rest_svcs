@@ -6,6 +6,8 @@ package com.employee.rest.controller;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -13,8 +15,9 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.employee.rest.data.model.Employee;
+import com.employee.rest.exception.EmployeeDataIntegrityException;
 import com.employee.rest.exception.EmployeeNotFoundException;
-import com.employee.rest.service.EmployeeManager;
+import com.employee.rest.service.EmployeeService;
 
 /**
  * EmployeeController - Controller for Employee REST Service API Call
@@ -25,7 +28,7 @@ import com.employee.rest.service.EmployeeManager;
 public class EmployeeController {
 
 	@Autowired
-	EmployeeManager empManager;
+	EmployeeService empService;
 
 	/**
 	 * getAllEmployees - URL Mapping <<servlet-mapping>>/employee/all
@@ -34,7 +37,7 @@ public class EmployeeController {
 	 */
 	@RequestMapping(value = "/all", method = RequestMethod.GET)
 	public List<Employee> getAllEmployees() {
-		return empManager.listAll();
+		return empService.listAll();
 	}
 
 	/**
@@ -46,7 +49,7 @@ public class EmployeeController {
 	 */
 	@RequestMapping(value = "/{sapid}", method = RequestMethod.GET)
 	public Employee getEmployee(@PathVariable int sapid) throws EmployeeNotFoundException {
-		return empManager.getEmployeeDetails(sapid);
+		return empService.getEmployeeDetails(sapid);
 	}
 
 	/**
@@ -55,8 +58,16 @@ public class EmployeeController {
 	 * @return String - Adding New Employee to the DB
 	 */
 	@RequestMapping(value = "/add", method = RequestMethod.POST)
-	public boolean addEmployee(@RequestBody Employee employee) {
-		return empManager.addEmployee(employee);
+	public ResponseEntity addEmployee(@RequestBody Employee employee) {
+
+		ResponseEntity myResponse = null;
+
+		if (empService.addEmployee(employee)) {
+			myResponse = new ResponseEntity<>(HttpStatus.CREATED);
+		} else {
+			myResponse = new ResponseEntity<>(HttpStatus.CREATED);
+		}
+		return myResponse;
 	}
 
 	/**
@@ -64,10 +75,11 @@ public class EmployeeController {
 	 * 
 	 * @return String - Adding New Employee to the DB
 	 * @throws EmployeeNotFoundException
+	 * @throws EmployeeDataIntegrityException 
 	 */
 	@RequestMapping(value = "/update", method = RequestMethod.POST)
-	public Employee modifyEmployeeDetails(@RequestBody Employee employee) throws EmployeeNotFoundException {
-		return empManager.modifyEmployeeDetails(employee);
+	public Employee modifyEmployeeDetails(@RequestBody Employee employee) throws EmployeeNotFoundException, EmployeeDataIntegrityException {
+		return empService.modifyEmployeeDetails(employee);
 	}
 
 	/**
@@ -77,9 +89,8 @@ public class EmployeeController {
 	 * @throws EmployeeNotFoundException
 	 */
 	@RequestMapping(value = "/delete/{sapid}", method = RequestMethod.DELETE)
-	public String removeEmployeeDetails(@PathVariable int sapid) throws EmployeeNotFoundException {
-		empManager.removeEmployeeDetails(sapid);
-		return "Ok";
+	public HttpStatus removeEmployeeDetails(@PathVariable int sapid) throws EmployeeNotFoundException {
+		return (empService.removeEmployeeDetails(sapid) ? HttpStatus.OK : HttpStatus.NOT_MODIFIED);
 	}
 
 }

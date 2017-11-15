@@ -10,14 +10,15 @@ import org.springframework.stereotype.Service;
 
 import com.employee.rest.data.dao.EmployeeDAO;
 import com.employee.rest.data.model.Employee;
+import com.employee.rest.exception.EmployeeDataIntegrityException;
 import com.employee.rest.exception.EmployeeNotFoundException;
 
 /**
- * EmployeeManager - Extending from the EmployeeDAOImpl
+ * EmployeeServiceImpl - Implements from the EmployeeService
  *
  */
 @Service
-public class EmployeeManagerImpl implements EmployeeManager {
+public class EmployeeServiceImpl implements EmployeeService {
 
 	@Autowired
 	EmployeeDAO employeeDao;
@@ -31,17 +32,14 @@ public class EmployeeManagerImpl implements EmployeeManager {
 	}
 
 	public boolean addEmployee(Employee employee) {
-		// TODO Auto-generated method stub
 		return employeeDao.insertEmployee(employee);
 	}
 
-	public Employee modifyEmployeeDetails(Employee employee) throws EmployeeNotFoundException {
-		// TODO Auto-generated method stub
+	public Employee modifyEmployeeDetails(Employee employee) throws EmployeeNotFoundException, EmployeeDataIntegrityException {
 		return employeeDao.modifyEmployeeDetails(employee);
 	}
 
 	public boolean removeEmployeeDetails(int sapId) throws EmployeeNotFoundException {
-		// TODO Auto-generated method stub
 		return employeeDao.removeEmployee(sapId);
 	}
 

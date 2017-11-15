@@ -13,7 +13,7 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 
 /**
- * Employee Model Class
+ * Employee Entity/Model Class
  *
  */
 @Entity
@@ -74,27 +74,12 @@ public class Employee implements Serializable {
 		toStringBuilder.append(Employee.class.getSimpleName());
 		toStringBuilder.append("[");
 		toStringBuilder.append("SAP ID : " + this.sapId);
-		toStringBuilder.append(", Name : " + this.fullName);
-		toStringBuilder.append(", Email : " + this.email);
-		toStringBuilder.append(", City : " + this.city);
+		toStringBuilder.append(", NAME : " + this.fullName);
+		toStringBuilder.append(", EMAIL : " + this.email);
+		toStringBuilder.append(", CITY : " + this.city);
 		toStringBuilder.append("]");
 		return toStringBuilder.toString();
 
-	}
-
-	@Override
-	public boolean equals(Object obj) {
-		if (this == obj)
-			return true;
-		if (sapId == null || obj == null || getClass() != obj.getClass())
-			return false;
-		Employee that = (Employee) obj;
-		return sapId.equals(that.sapId);
-	}
-
-	@Override
-	public int hashCode() {
-		return sapId == null ? 0 : sapId.hashCode();
 	}
 
 }

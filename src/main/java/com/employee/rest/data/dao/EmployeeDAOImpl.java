@@ -13,8 +13,10 @@ import org.jboss.logging.Logger;
 import org.jboss.logging.Logger.Level;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.employee.rest.data.model.Employee;
+import com.employee.rest.exception.EmployeeDataIntegrityException;
 import com.employee.rest.exception.EmployeeNotFoundException;
 
 /**
@@ -31,47 +33,70 @@ public class EmployeeDAOImpl implements EmployeeDAO {
 	Session session = null;
 	Transaction tx = null;
 
+	/**
+	 * Retrieve all the Records from the DB
+	 */
+	@SuppressWarnings("unchecked")
+	@Transactional
 	public List<Employee> getAllEmployees() {
-		List<Employee> employees = new ArrayList<Employee>();
-
-		Employee vo1 = new Employee();
-		vo1.setSapId(1);
-		vo1.setFullName("Lokesh");
-		vo1.setEmail("Lokesh@test.com");
-		vo1.setCity("Chennai");
-
-		employees.add(vo1);
-
-		Employee vo2 = new Employee();
-		vo2.setSapId(1);
-		vo2.setFullName("Mukesh");
-		vo2.setEmail("Mukesh@test.com");
-		vo2.setCity("Pune");
-		employees.add(vo2);
-
-		return employees;
+		List<Employee> employeesList;
+		session = sessionFactory.openSession();
+		tx = session.beginTransaction();
+		employeesList = new ArrayList<Employee>((List<Employee>) session.createCriteria(Employee.class).list());
+		return employeesList;
 	}
 
-	public Employee modifyEmployeeDetails(Employee employee) {
-		try {
+	/**
+	 * Modify the Employee Record based on the incoming object. <br/>
+	 * This Method Retrieve the record at first and then compares the data
+	 * differenced between the objects.
+	 * 
+	 * @param Employee
+	 *            - Object of the employee containing the changes.
+	 * @throws EmployeeNotFoundException
+	 * @throws EmployeeDataIntegrityException
+	 */
+	@Transactional
+	public Employee modifyEmployeeDetails(Employee employee)
+			throws EmployeeNotFoundException, EmployeeDataIntegrityException {
 
-			session = sessionFactory.openSession();
-			tx = session.beginTransaction();
+		Employee empDbSource = null;
 
-			session.update(employee);
+		session = sessionFactory.openSession();
+		tx = session.beginTransaction();
 
-			tx.commit();
-
-		} catch (Exception ex) {
-			ex.printStackTrace();
+		empDbSource = this.getEmployee(employee.getSapId());
+		isEmployeeExists(empDbSource);
+		
+		LOGGER.log(Level.INFO, empDbSource.toString());
+		LOGGER.log(Level.INFO, employee.toString());
+		
+		if (empDbSource.getSapId() <= 0) {
+			throw new EmployeeNotFoundException(employee.getSapId());
 		}
 
-		session.close();
+		if (employee.getCity() != null && (!employee.getCity().equalsIgnoreCase(empDbSource.getCity()))) {
+			empDbSource.setCity(employee.getCity());
+		}
 
-		System.err.println(employee.toString());
-		return employee;
+		if (employee.getEmail() != null && (!employee.getEmail().equalsIgnoreCase(empDbSource.getEmail()))) {
+			empDbSource.setEmail(employee.getEmail());
+		}
+
+		if (employee.getFullName() != null && (!employee.getFullName().equalsIgnoreCase(empDbSource.getFullName()))) {
+			empDbSource.setFullName(employee.getFullName());
+		}
+
+		if (employee.getSapId() <= 0 && ((employee.getSapId() != empDbSource.getSapId()))) {
+			throw new EmployeeDataIntegrityException("Unable to Edit Sap Id");
+		}
+
+		tx.commit();
+
+		return empDbSource;
 	}
 
+	@Transactional
 	public Employee getEmployee(int sapid) throws EmployeeNotFoundException {
 		session = sessionFactory.openSession();
 		tx = session.beginTransaction();
@@ -81,27 +106,29 @@ public class EmployeeDAOImpl implements EmployeeDAO {
 			throw new EmployeeNotFoundException(sapid);
 		}
 
-		tx.commit();
-		session.close();
 		return employee;
 
 	}
 
-	public boolean isEmployeeExists(Employee employee) {
+	public boolean isEmployeeExists(Employee employee) throws EmployeeNotFoundException {
+
+		Employee em = this.getEmployee(employee.getSapId());
+		LOGGER.log(Level.DEBUG, em.getSapId());
 		return false;
 	}
 
+	@Transactional
 	public boolean removeEmployee(int sapId) throws EmployeeNotFoundException {
-
 		session = sessionFactory.openSession();
 		tx = session.beginTransaction();
 		Employee employee = getEmployee(sapId);
 		session.delete(employee);
 		tx.commit();
-		session.close();
+
 		return (employee.getSapId() != null);
 	}
 
+	@Transactional
 	public boolean insertEmployee(Employee employee) {
 
 		session = sessionFactory.openSession();
@@ -112,11 +139,11 @@ public class EmployeeDAOImpl implements EmployeeDAO {
 		session.save(employee);
 
 		tx.commit();
-		session.close();
 
 		return (employee.getSapId() != null);
 	}
 
+	@Transactional
 	public Employee modifyEmployeeRecord(Employee employee) throws EmployeeNotFoundException {
 		// TODO: make changes to the return by removing the throw
 		throw new EmployeeNotFoundException(1);

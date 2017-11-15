@@ -6,13 +6,14 @@ package com.employee.rest.service;
 import java.util.List;
 
 import com.employee.rest.data.model.Employee;
+import com.employee.rest.exception.EmployeeDataIntegrityException;
 import com.employee.rest.exception.EmployeeNotFoundException;
 
 /**
- * EmployeeManager Service Interface
+ * EmployeeService Service Interface
  *
  */
-public interface EmployeeManager {
+public interface EmployeeService {
 
 	List<Employee> listAll();
 
@@ -20,7 +21,7 @@ public interface EmployeeManager {
 
 	boolean addEmployee(Employee employee);
 
-	Employee modifyEmployeeDetails(Employee employee) throws EmployeeNotFoundException;
+	Employee modifyEmployeeDetails(Employee employee) throws EmployeeNotFoundException, EmployeeDataIntegrityException;
 
 	boolean removeEmployeeDetails(int sapid) throws EmployeeNotFoundException;
 

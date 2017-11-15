@@ -58,14 +58,14 @@ public class EmployeeController {
 	 * @return String - Adding New Employee to the DB
 	 */
 	@RequestMapping(value = "/add", method = RequestMethod.POST)
-	public ResponseEntity addEmployee(@RequestBody Employee employee) {
+	public ResponseEntity<String> addEmployee(@RequestBody Employee employee) {
 
-		ResponseEntity myResponse = null;
+		ResponseEntity<String> myResponse = null;
 
 		if (empService.addEmployee(employee)) {
 			myResponse = new ResponseEntity<>(HttpStatus.CREATED);
 		} else {
-			myResponse = new ResponseEntity<>(HttpStatus.CREATED);
+			myResponse = new ResponseEntity<>(HttpStatus.BAD_REQUEST);
 		}
 		return myResponse;
 	}
@@ -75,10 +75,11 @@ public class EmployeeController {
 	 * 
 	 * @return String - Adding New Employee to the DB
 	 * @throws EmployeeNotFoundException
-	 * @throws EmployeeDataIntegrityException 
+	 * @throws EmployeeDataIntegrityException
 	 */
 	@RequestMapping(value = "/update", method = RequestMethod.POST)
-	public Employee modifyEmployeeDetails(@RequestBody Employee employee) throws EmployeeNotFoundException, EmployeeDataIntegrityException {
+	public Employee modifyEmployeeDetails(@RequestBody Employee employee)
+			throws EmployeeNotFoundException, EmployeeDataIntegrityException {
 		return empService.modifyEmployeeDetails(employee);
 	}
 
@@ -89,8 +90,9 @@ public class EmployeeController {
 	 * @throws EmployeeNotFoundException
 	 */
 	@RequestMapping(value = "/delete/{sapid}", method = RequestMethod.DELETE)
-	public HttpStatus removeEmployeeDetails(@PathVariable int sapid) throws EmployeeNotFoundException {
-		return (empService.removeEmployeeDetails(sapid) ? HttpStatus.OK : HttpStatus.NOT_MODIFIED);
+	public ResponseEntity<String> removeEmployeeDetails(@PathVariable int sapid) throws EmployeeNotFoundException {
+		return (empService.removeEmployeeDetails(sapid) ? new ResponseEntity<String>(HttpStatus.OK)
+				: new ResponseEntity<String>(HttpStatus.NOT_MODIFIED));
 	}
 
 }

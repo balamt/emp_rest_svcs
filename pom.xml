@@ -78,7 +78,9 @@
 					<groupId>org.apache.tomcat.maven</groupId>
 					<artifactId>tomcat7-maven-plugin</artifactId>
 					<version>${tomcat.maven.plugin.version}</version>
-					<!-- <configuration> <path>/springrest</path> </configuration> -->
+					<configuration>
+						<path>/emp_rest_svcs</path>
+					</configuration>
 				</plugin>
 			</plugins>
 		</pluginManagement>
@@ -89,8 +91,8 @@
 				<artifactId>maven-compiler-plugin</artifactId>
 				<version>3.7.0</version>
 				<configuration>
-					<source>1.7</source>
-					<target>1.7</target>
+					<source>${java-version}</source>
+					<target>${java-version}</target>
 				</configuration>
 			</plugin>
 		</plugins>
